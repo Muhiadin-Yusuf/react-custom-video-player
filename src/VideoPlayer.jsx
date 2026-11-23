@@ -18,6 +18,7 @@ const VideoPlayer = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [speed, setSpeed] = useState(1);
+  const [subtitleOn, setSubtitleOn] = useState(false);
 
   const togglePlay = () => {
     if (videoRef.current.paused) {
@@ -45,6 +46,13 @@ const VideoPlayer = () => {
     videoRef.current.playbackRate = rate;
     setSpeed(rate);
   };
+
+  function toggleSubtitle() {
+    const track = videoRef.current.textTracks[0];
+    const next = !subtitleOn;
+    track.mode = next ? "showing" : "hidden";
+    setSubtitleOn(next);
+  }
   return (
     <div>
       <video
@@ -53,9 +61,17 @@ const VideoPlayer = () => {
         width={640}
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
-        onLoadedMetadata={handleLoadedMetadata}
-        onTimeUpdate={handleTimeUpdate}
-      />
+        onLoadedMetadata={(e) => setDuration(e.target.duration)}
+        onTimeUpdate={(e) => setCurrentTime(e.target.currentTime)}
+      >
+        <track
+          kind="subtitles"
+          src="subtitle.vtt"
+          srcLang="en"
+          label="English"
+          default
+        />
+      </video>
 
       <div>
         <button onClick={togglePlay}>{playing ? "Pause" : "Play"}</button>
@@ -79,6 +95,9 @@ const VideoPlayer = () => {
             </option>
           ))}
         </select>
+        <button onClick={toggleSubtitle}>
+          {subtitleOn ? "Subtitle:On" : "Subtitle:Off"}
+        </button>
       </div>
     </div>
   );
