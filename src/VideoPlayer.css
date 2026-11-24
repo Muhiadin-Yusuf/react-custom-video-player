@@ -1,0 +1,334 @@
+/* ============================================================
+   VideoPlayer.css — Modern dark glassmorphism theme
+   Matches VideoPlayer.jsx structure exactly
+   ============================================================ */
+
+/* ---------- RESET & DESIGN TOKENS ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --vp-bg: #0c0f15;
+  --vp-surface: #161b22;
+  --vp-surface-2: #1e252e;
+  --vp-surface-3: #2a313c;
+  --vp-text: #eef2f6;
+  --vp-text-secondary: #9aa7b5;
+  --vp-accent: #5b9dff;
+  --vp-accent-hover: #7aadff;
+  --vp-accent-active: #4a8af0;
+  --vp-radius: 20px;
+  --vp-radius-sm: 12px;
+  --vp-shadow-lg: 0 25px 40px -12px rgba(0, 0, 0, 0.7);
+  --vp-shadow-md: 0 8px 20px -6px rgba(0, 0, 0, 0.6);
+  --vp-transition: 0.2s ease;
+}
+
+/* ---------- WRAPPER (the outer <div> from the component) ---------- */
+/* Targets the top-level div that contains <video> and the controls div */
+.video-player {
+  background: var(--vp-surface);
+  backdrop-filter: blur(8px);
+  border-radius: var(--vp-radius);
+  padding: 1.75rem;
+  box-shadow: var(--vp-shadow-lg), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  max-width: 780px;
+  width: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--vp-text);
+  transition: box-shadow 0.3s ease;
+}
+
+.video-player:hover {
+  box-shadow: 0 30px 50px -15px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(91, 157, 255, 0.15);
+}
+
+/* ---------- VIDEO ELEMENT ---------- */
+.video-player video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--vp-radius-sm);
+  background: #000;
+  box-shadow: var(--vp-shadow-md);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: box-shadow 0.2s;
+}
+
+.video-player video:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--vp-accent), var(--vp-shadow-md);
+}
+
+/* ---------- CONTROLS ROW ---------- */
+/* The component's controls div is the sibling immediately after <video> */
+.video-player > div:last-child {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 0.85rem;
+  margin-top: 1.5rem;
+}
+
+/* ---------- BUTTONS (Play/Pause + Subtitle) ---------- */
+.video-player button {
+  background: var(--vp-surface-2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--vp-text);
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 40px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: all var(--vp-transition);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.01em;
+  line-height: 1;
+  white-space: nowrap;
+  backdrop-filter: blur(4px);
+}
+
+.video-player button:hover {
+  background: var(--vp-surface-3);
+  border-color: rgba(91, 157, 255, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5),
+    0 0 0 2px rgba(91, 157, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.video-player button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  background: #2f3846;
+}
+
+.video-player button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--vp-accent);
+}
+
+/* Play/Pause button — first button in controls gets accent treatment */
+.video-player > div:last-child > button:first-child {
+  background: var(--vp-accent);
+  color: #0a0f16;
+  border: none;
+  font-weight: 600;
+  box-shadow: 0 6px 16px rgba(91, 157, 255, 0.25);
+  padding: 0.6rem 1.5rem;
+}
+
+.video-player > div:last-child > button:first-child:hover {
+  background: var(--vp-accent-hover);
+  box-shadow: 0 8px 22px rgba(91, 157, 255, 0.45);
+  color: #070b10;
+}
+
+.video-player > div:last-child > button:first-child:active {
+  background: var(--vp-accent-active);
+  box-shadow: 0 3px 10px rgba(91, 157, 255, 0.4);
+}
+
+/* ---------- SEEK RANGE ---------- */
+.video-player input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  min-width: 140px;
+  height: 6px;
+  background: var(--vp-surface-3);
+  border-radius: 10px;
+  cursor: pointer;
+  outline: none;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6);
+  transition: background 0.1s;
+}
+
+.video-player input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 0 2px var(--vp-accent);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  border: none;
+}
+
+.video-player input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 2px 14px rgba(91, 157, 255, 0.8), 0 0 0 3px var(--vp-accent);
+}
+
+.video-player input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 0 2px var(--vp-accent);
+  cursor: pointer;
+  border: none;
+}
+
+.video-player input[type="range"]::-moz-range-track {
+  height: 6px;
+  background: var(--vp-surface-3);
+  border-radius: 10px;
+}
+
+.video-player input[type="range"]::-moz-range-progress {
+  background: var(--vp-accent);
+  border-radius: 10px;
+  height: 6px;
+}
+
+/* ---------- TIME DISPLAY ---------- */
+.video-player > div:last-child > span {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.85rem;
+  color: var(--vp-text-secondary);
+  letter-spacing: 0.02em;
+  font-weight: 500;
+  min-width: 75px;
+  text-align: center;
+  background: var(--vp-surface-2);
+  padding: 0.4rem 0.8rem;
+  border-radius: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* ---------- SPEED SELECT ---------- */
+.video-player select {
+  background: var(--vp-surface-2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--vp-text);
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 0.55rem 1.8rem 0.55rem 1rem;
+  border-radius: 40px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239aa7b5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center;
+  background-size: 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all var(--vp-transition);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  min-width: 88px;
+}
+
+.video-player select:hover {
+  background-color: var(--vp-surface-3);
+  border-color: rgba(91, 157, 255, 0.5);
+  box-shadow: 0 0 0 2px rgba(91, 157, 255, 0.15);
+}
+
+.video-player select:focus-visible {
+  outline: none;
+  border-color: var(--vp-accent);
+  box-shadow: 0 0 0 3px rgba(91, 157, 255, 0.4);
+}
+
+.video-player select option {
+  background: var(--vp-surface);
+  color: var(--vp-text);
+  padding: 0.6rem;
+}
+
+/* ---------- SUBTITLE BUTTON (last button) ---------- */
+/* Active state is toggled via the text content, so we style by :last-child
+   and rely on a subtle visual cue. Add an .active class if you can modify JSX;
+   otherwise the button stays neutral. */
+
+.video-player > div:last-child > button:last-child {
+  /* Subtitle button — same base as all buttons */
+}
+
+/* Optional: if you add className={subtitleOn ? "active" : ""} in JSX,
+   these rules will apply. */
+.video-player button.active {
+  background: var(--vp-accent);
+  color: #0a0f16;
+  border-color: var(--vp-accent);
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(91, 157, 255, 0.4);
+}
+
+.video-player button.active:hover {
+  background: var(--vp-accent-hover);
+  box-shadow: 0 6px 18px rgba(91, 157, 255, 0.6);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 640px) {
+  .video-player {
+    padding: 1.2rem;
+  }
+
+  .video-player > div:last-child {
+    gap: 0.75rem;
+  }
+
+  .video-player > div:last-child > span {
+    min-width: 65px;
+    font-size: 0.78rem;
+    padding: 0.35rem 0.6rem;
+  }
+
+  .video-player button {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .video-player > div:last-child > button:first-child {
+    padding: 0.5rem 1.2rem;
+  }
+
+  .video-player select {
+    font-size: 0.85rem;
+    padding: 0.5rem 1.6rem 0.5rem 0.8rem;
+    min-width: 76px;
+  }
+
+  .video-player input[type="range"] {
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .video-player > div:last-child {
+    justify-content: center;
+  }
+
+  .video-player input[type="range"] {
+    order: 3;
+    flex: 1 1 100%;
+    margin-top: 0.25rem;
+  }
+
+  .video-player > div:last-child > span {
+    order: 4;
+    flex: 1 1 100%;
+    text-align: center;
+  }
+}

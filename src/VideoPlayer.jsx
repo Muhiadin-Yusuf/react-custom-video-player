@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import "./VideoPlayer.css";
 
 const VIDEO_URL =
   "https://ik.imagekit.io/zgpbjaqlp/How%20to%20Understand%20English%20Movies%20Without%20Subtitles.mp4";
@@ -54,7 +55,7 @@ const VideoPlayer = () => {
     setSubtitleOn(next);
   }
   return (
-    <div>
+    <div className="video-player">
       <video
         ref={videoRef}
         src={VIDEO_URL}
